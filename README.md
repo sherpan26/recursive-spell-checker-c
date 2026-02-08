@@ -1,44 +1,44 @@
-# recursive-spell-checker-c
 # Recursive Spell Checker in C
 
-This project implements a robust spell checker in C that scans individual text files or recursively traverses directories to check spelling using a custom dictionary file.
+A spell checker written in C that scans a single text file or recursively traverses a directory,
+reporting misspellings using a dictionary file.
 
-## 📁 Project Structure
+## Features
+- **Recursive directory traversal** (walks subdirectories)
+- **Dictionary-backed lookup** (binary search for fast checks)
+- **Punctuation-aware tokenization** (handles leading/trailing punctuation)
+- **Capitalization rules** (accepts `hello`, `Hello`, `HELLO`; rejects mixed-case like `HeLlO`)
+- **Positioned error output** (reports line/column + the misspelled token)
 
-- `spchk.c`: Main spell-checker program with recursive directory traversal.
-- `dictionary.c` / `dictionary.h`: Loads and stores dictionary words; handles case variation rules.
-- `spchk.h`: Header for spell-checking functions.
-- `spchk2.c`: Alternate or extended implementation with advanced case handling.
-- `english.dict`: Plain text dictionary file (one word per line).
-- `test1`: Sample test input file.
-- `Makefile`: Automates compilation of the project.
 
-## ✨ Features
+## Run
+```bash
+./spchk <path-to-file-or-directory> english.dict
+```
 
-### ✅ Punctuation Handling
-- Ignores trailing and leading punctuation (e.g., `"apple."` → `"apple"`).
-- Accepts valid hyphenated words (e.g., `mother-in-law`, `well-being`).
+## Examples:
+```bash
+./spchk test1 english.dict
+./spchk ./some_folder english.dict
+```
+## Output
+```bash
+Each misspelling is reported with its line, column, and word (format depends on implementation).
+```
 
-### 🔠 Capitalization Rules
-- Accepts:
-  - All lowercase: `hello`
-  - First-letter uppercase: `Hello`
-  - All uppercase: `HELLO`
-- Rejects:
-  - Mixed-case like `HeLlO`
-  - Incorrectly capitalized words (e.g., `macdonald` if dictionary has `MacDonald`)
+## Project Files
+```bash
+spchk.c — main program + recursive traversal
 
-### 🔍 Spell-Checking Logic
-- Binary search for fast word lookup.
-- Tokenization logic to isolate words line-by-line and track:
-  - **Line number**
-  - **Column number**
-  - **Exact word text**
+dictionary.c/.h — dictionary loading + lookup + case rules
 
-### 📂 Recursive Directory Traversal
-- Recursively descends into subdirectories.
-- Skips hidden files and directories.
-- Only checks `.txt` files.
+spchk.h — spell-check function declarations
 
-### 📢 Error Reporting
-Outputs misspelled words in the format:
+spchk2.c — alternate/extended implementation (optional)
+
+english.dict — dictionary (one word per line)
+
+test1 — sample input
+
+Makefile — build automation
+```
